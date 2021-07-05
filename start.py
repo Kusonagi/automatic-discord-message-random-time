@@ -53,7 +53,7 @@ def send_message(conn, channel_id, message_data, message):
         resp = conn.getresponse()
 
         if 199 < resp.status < 300:
-            print("Отправлено сообщение:", message,"в" , now.strftime("%Y-%m-%d %H:%M:%S"))
+            print("Отправлено сообщение:", str(message),"в" , now.strftime("%Y-%m-%d %H:%M:%S"))
             pass
 
         else:
