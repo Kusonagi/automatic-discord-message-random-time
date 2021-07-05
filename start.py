@@ -34,9 +34,6 @@ y = time.readline()
 print('Отправка сообщений в промежутке от', int(x), 'до', int(y), 'секунд')
 #end define time
 
-#define message_content
-with open('./data/message.txt', 'r') as file:
-	message = file.read()
 header_data = {
 	"content-type": "application/json",
 	"user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.66 Safari/537.36",
@@ -49,14 +46,14 @@ def get_connection():
 	return HTTPSConnection("discordapp.com", 443)
 
 
-def send_message(conn, channel_id, message_data):
+def send_message(conn, channel_id, message_data, message):
     try:
         conn.request(
             "POST", f"/api/v6/channels/{channelid}/messages", message_data, header_data)
         resp = conn.getresponse()
 
         if 199 < resp.status < 300:
-            print("Отправлено", now.strftime("%Y-%m-%d %H:%M:%S"))
+            print("Отправлено сообщение:", int(message),"в" , now.strftime("%Y-%m-%d %H:%M:%S"))
             pass
 
         else:
@@ -66,12 +63,17 @@ def send_message(conn, channel_id, message_data):
     except:
         stderr.write("BEG_ERROR\n")
 
+def randommessage():
+	message = random.choice(list(open('./data/message.txt')))
+	return message
+    
 def main():
+	message = randommessage()
 	message_data = {
 		"content": f"{message}",
 		"tts": "false",
 		}
-	send_message(get_connection(), (f"{channelid}"), dumps(message_data))
+	send_message(get_connection(), (f"{channelid}"), dumps(message_data), message)
 
 
 if __name__ == '__main__':
