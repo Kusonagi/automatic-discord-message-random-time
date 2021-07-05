@@ -47,13 +47,14 @@ def get_connection():
 
 
 def send_message(conn, channel_id, message_data, message):
+    now = datetime.datetime.now()
     try:
         conn.request(
             "POST", f"/api/v6/channels/{channelid}/messages", message_data, header_data)
         resp = conn.getresponse()
 
         if 199 < resp.status < 300:
-            print("Отправлено сообщение:", str(message),"в" , now.strftime("%Y-%m-%d %H:%M:%S"))
+            print("Отправлено сообщение:", message,"в" , now.strftime("%Y-%m-%d %H:%M:%S"))
             pass
 
         else:
@@ -64,7 +65,7 @@ def send_message(conn, channel_id, message_data, message):
         stderr.write("BEG_ERROR\n")
 
 def randommessage():
-	message = random.choice(list(open('./data/message.txt')))
+	message = random.choice(list(open('./data/message.txt'))).rstrip()
 	return message
     
 def main():
