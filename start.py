@@ -65,7 +65,7 @@ def send_message(conn, channel_id, message_data, message):
         stderr.write("BEG_ERROR\n")
 
 def randommessage():
-	message = random.choice(list(open(u'./data/message.txt'))).rstrip()
+	message = random.choice(list(open('./data/message.txt'))).rstrip()
 	return message
     
 def main():
